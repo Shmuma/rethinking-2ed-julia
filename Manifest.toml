@@ -1051,6 +1051,12 @@ git-tree-sha1 = "edef25a158db82f4940720ebada14a60ef6c4232"
 uuid = "171d559e-b47b-412a-8079-5efa626c420e"
 version = "0.1.13"
 
+[[StatRethink]]
+deps = ["DataFrames"]
+path = "/home/shmuma/.julia/dev/StatRethink"
+uuid = "0ff94ed7-89af-4ae0-86e0-35dfa06f05eb"
+version = "0.0.0"
+
 [[Static]]
 deps = ["IfElse"]
 git-tree-sha1 = "2740ea27b66a41f9d213561a04573da5d3823d4b"
