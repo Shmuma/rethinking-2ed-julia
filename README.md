@@ -1,2 +1,5 @@
-# rethinking-2ed-julia
-Port of "Statistical Rethinking" 2ed code to Julia
+# StatisticalRethinking (2nd edition) on Julia
+
+This repo contains my port of StatisticalRethinking code examples to Julia with Turing.
+
+[https://shmuma.github.io/rethinking-2ed-julia/](https://shmuma.github.io/rethinking-2ed-julia/)
