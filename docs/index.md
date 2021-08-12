@@ -13,7 +13,7 @@ but please remember that it is much more fun to try to solve them yourself (in a
 
 * [Preface](00-Preface.html)
 * [Chapter 1. The Golem of Prague](01-Chapter 1. The Golem of Prague.html)
-* [Chapter 2. Small Worlds and Large World](02-Chapter 2.Small Worlds and Large World.html)
+* [Chapter 2. Small Worlds and Large World](02-Chapter 2. Small Worlds and Large World.html)
 * [Chapter 3. Sampling the Imaginary](03-Chapter 3. Sampling the Imaginary.html)
 * [Chapter 3. Practice](04-Practice for chapter 3.html)
 * [Chapter 4. Geocentric Models](05-Chapter 4. Geocentric Models.html)
