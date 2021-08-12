@@ -19,3 +19,5 @@ but please try to solve them yourself (in addition, my solutions might be just w
 * [Chapter 3. Sampling the Imaginary](03-Chapter 3. Sampling the Imaginary.html)
 * [Chapter 3. Practice](04-Practice for chapter 3.html)
 * [Chapter 4. Geocentric Models](05-Chapter 4. Geocentric Models.html)
+
+Besides Julia, second edition examples were also [ported to NumPyro](https://fehiepsi.github.io/rethinking-numpyro/).
