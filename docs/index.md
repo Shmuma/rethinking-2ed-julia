@@ -14,10 +14,9 @@ but please first try to solve them yourself, as it is much more fun (in addition
 ## Contents
 
 * [Preface](00-Preface.html)
-* [Chapter 1. The Golem of Prague](01-Chapter 1. The Golem of Prague.html)
+* [Chapter 1. The Golem of Prague (no code)](01-Chapter 1. The Golem of Prague.html)
 * [Chapter 2. Small Worlds and Large World](02-Chapter 2. Small Worlds and Large World.html)
-* [Chapter 3. Sampling the Imaginary](03-Chapter 3. Sampling the Imaginary.html)
-* [Chapter 3. Practice](04-Practice for chapter 3.html)
+* [Chapter 3. Sampling the Imaginary](03-Chapter 3. Sampling the Imaginary.html) - [Practice template](04-Practice for chapter 3.html)
 * [Chapter 4. Geocentric Models](05-Chapter 4. Geocentric Models.html)
 
 More chapters to come, stay tuned!
