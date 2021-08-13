@@ -4,9 +4,7 @@ Here is the port of code examples from amazing [Statistical Rethinking book](htt
 to [Julia programming language](https://julialang.org/).
 
 It uses [Turing language](https://turing.ml/stable/) for Bayesian modeling and [Julia Plots](https://docs.juliaplots.org/latest/) for charts, so, it could be 
-used as hands-on introduction to those packages. 
-
-In addition to those main dependencies, notebook relies on several other Julia packages, you will find their list in [Project.toml](https://github.com/Shmuma/rethinking-2ed-julia/blob/main/Project.toml)
+used as hands-on introduction to those packages. I used Julia 1.6.2 to generate those notebooks, full list of dependencies is in [Project.toml](https://github.com/Shmuma/rethinking-2ed-julia/blob/main/Project.toml)
 
 Besides notebooks, I also published my solutions to the practice problems, which could be [found here](https://github.com/Shmuma/rethinking-2ed-julia/tree/main/solutions),
 but please first try to solve them yourself, as it is much more fun (in addition, my solutions might be just wrong).
