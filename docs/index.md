@@ -1,4 +1,4 @@
-# StatisticRethinking (2nd edition) with Julia
+# Statistical Rethinking (2nd edition) with Julia
 
 Here is the port of code examples from amazing [Statistical Rethinking book](https://xcelab.net/rm/statistical-rethinking/) 
 to [Julia programming language](https://julialang.org/).
