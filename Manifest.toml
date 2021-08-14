@@ -138,6 +138,12 @@ git-tree-sha1 = "c3598e525718abcc440f69cc6d5f60dda0a1b61e"
 uuid = "6e34b625-4abd-537c-b88f-471c36dfa7a0"
 version = "1.0.6+5"
 
+[[CPUSummary]]
+deps = ["Hwloc", "IfElse", "Static"]
+git-tree-sha1 = "b3ce76887735be3e9adbb3eb967676a586694343"
+uuid = "2a0fbf3d-bb9c-48f3-b0a9-814d99fd7ab9"
+version = "0.1.1"
+
 [[CSV]]
 deps = ["Dates", "Mmap", "Parsers", "PooledArrays", "SentinelArrays", "Tables", "Unicode"]
 git-tree-sha1 = "b83aa3f513be680454437a0eee21001607e5d983"
@@ -563,6 +569,12 @@ git-tree-sha1 = "44e3b40da000eab4ccb1aecdc4801c040026aeb5"
 uuid = "cd3eb016-35fb-5094-929b-558a96fad6f3"
 version = "0.9.13"
 
+[[HostCPUFeatures]]
+deps = ["IfElse", "Libdl", "Static"]
+git-tree-sha1 = "e86382a874edd4ff47fd1373e03f38302af93345"
+uuid = "3e5b6fbb-0976-4d2c-9146-d79de83f2fb0"
+version = "0.1.2"
+
 [[Hwloc]]
 deps = ["Hwloc_jll"]
 git-tree-sha1 = "92d99146066c5c6888d5a3abc871e6a214388b91"
@@ -630,6 +642,11 @@ deps = ["Test"]
 git-tree-sha1 = "15732c475062348b0165684ffe28e85ea8396afc"
 uuid = "41ab1584-1d38-5bbf-9106-f11c6c58b48f"
 version = "1.0.0"
+
+[[IrrationalConstants]]
+git-tree-sha1 = "f76424439413893a832026ca355fe273e93bce94"
+uuid = "92d709cd-6900-40b7-9082-c6be49f344b6"
+version = "0.1.0"
 
 [[IterTools]]
 git-tree-sha1 = "05110a2ab1fc5f932622ffea2a003221f4782c18"
@@ -806,10 +823,10 @@ deps = ["Libdl"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 
 [[LogExpFunctions]]
-deps = ["DocStringExtensions", "LinearAlgebra"]
-git-tree-sha1 = "7bd5f6565d80b6bf753738d2bc40a5dfea072070"
+deps = ["DocStringExtensions", "IrrationalConstants", "LinearAlgebra"]
+git-tree-sha1 = "3d682c07e6dd250ed082f883dc88aee7996bf2cc"
 uuid = "2ab3a3ac-af41-5b50-aa03-7779005ae688"
-version = "0.2.5"
+version = "0.3.0"
 
 [[Logging]]
 uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
@@ -822,9 +839,9 @@ version = "0.4.7"
 
 [[LoopVectorization]]
 deps = ["ArrayInterface", "DocStringExtensions", "IfElse", "LinearAlgebra", "OffsetArrays", "Polyester", "Requires", "SLEEFPirates", "Static", "StrideArraysCore", "ThreadingUtilities", "UnPack", "VectorizationBase"]
-git-tree-sha1 = "6643933c619b292cb1fe566f5a411dddddec3db9"
+git-tree-sha1 = "d5cbff8f4872adddb8c6a597ef5b2da25137ba98"
 uuid = "bdcacae8-1622-11e9-2a5c-532679323890"
-version = "0.12.63"
+version = "0.12.64"
 
 [[MCMCChains]]
 deps = ["AbstractFFTs", "AbstractMCMC", "AxisArrays", "Compat", "Dates", "Distributions", "Formatting", "IteratorInterfaceExtensions", "LinearAlgebra", "MLJModelInterface", "NaturalSort", "PrettyTables", "Random", "RecipesBase", "Serialization", "SpecialFunctions", "Statistics", "StatsBase", "StatsFuns", "TableTraits", "Tables"]
@@ -1247,9 +1264,9 @@ version = "0.6.25"
 
 [[SciMLBase]]
 deps = ["ArrayInterface", "CommonSolve", "ConstructionBase", "Distributed", "DocStringExtensions", "IteratorInterfaceExtensions", "LinearAlgebra", "Logging", "RecipesBase", "RecursiveArrayTools", "StaticArrays", "Statistics", "Tables", "TreeViews"]
-git-tree-sha1 = "f4bcc1bc78857e0602de2ec548b08ac73bf29acc"
+git-tree-sha1 = "a89adabe1286c8edb6ae819037a6f5a32332adb7"
 uuid = "0bca4576-84f4-4d90-8ffe-ffa030f20462"
-version = "1.18.4"
+version = "1.18.5"
 
 [[ScientificTypesBase]]
 git-tree-sha1 = "8a476e63390bfc987aa3cca02d90ea1dbf8b457e"
@@ -1337,7 +1354,9 @@ version = "1.2.12"
 
 [[StatisticalRethinking]]
 deps = ["AxisArrays", "BSplines", "BrowseTables", "CSV", "DataFrames", "Distributions", "DocStringExtensions", "DrWatson", "Formatting", "GLM", "GR", "KernelDensity", "LaTeXStrings", "LinearAlgebra", "MCMCChains", "MonteCarloMeasurements", "NamedArrays", "NamedTupleTools", "Optim", "OrderedCollections", "Parameters", "ParetoSmooth", "Pkg", "Pluto", "PlutoUI", "PrettyTables", "Random", "Reexport", "Requires", "Statistics", "StatsBase", "StatsFuns", "StatsModelComparisons", "StatsPlots", "StructuralCausalModels", "Tables", "Test", "Unicode"]
-git-tree-sha1 = "2312c47321ba2931badbbc9ac25bbdc5dcd0cfcb"
+git-tree-sha1 = "8f47d7d56da3f714d73b549f19a85f7bc970e3f1"
+repo-rev = "master"
+repo-url = "https://github.com/StatisticalRethinkingJulia/StatisticalRethinking.jl.git"
 uuid = "2d09df54-9d0f-5258-8220-54c2a3d4fbee"
 version = "3.4.5"
 
@@ -1363,10 +1382,10 @@ uuid = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 version = "0.33.9"
 
 [[StatsFuns]]
-deps = ["LogExpFunctions", "Rmath", "SpecialFunctions"]
-git-tree-sha1 = "30cd8c360c54081f806b1ee14d2eecbef3c04c49"
+deps = ["IrrationalConstants", "LogExpFunctions", "Reexport", "Rmath", "SpecialFunctions"]
+git-tree-sha1 = "20d1bb720b9b27636280f751746ba4abb465f19d"
 uuid = "4c63d2b9-4356-54db-8cca-17b64c39e42c"
-version = "0.9.8"
+version = "0.9.9"
 
 [[StatsModelComparisons]]
 deps = ["DrWatson", "ParetoSmooth", "RecipesBase", "Statistics", "StatsFuns"]
@@ -1532,10 +1551,10 @@ version = "1.0.2"
 uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
 
 [[VectorizationBase]]
-deps = ["ArrayInterface", "Hwloc", "IfElse", "Libdl", "LinearAlgebra", "Static"]
-git-tree-sha1 = "32a3252a00a8e4aa23129e2c36a237e812f71eeb"
+deps = ["ArrayInterface", "CPUSummary", "HostCPUFeatures", "Hwloc", "IfElse", "Libdl", "LinearAlgebra", "Static"]
+git-tree-sha1 = "0e940546f8ad51f53966c866db14ff9b58be24e0"
 uuid = "3d5dd08c-fd9d-11e8-17fa-ed2836048c2f"
-version = "0.20.33"
+version = "0.20.34"
 
 [[VersionParsing]]
 git-tree-sha1 = "80229be1f670524750d905f8fc8148e5a8c4537f"
