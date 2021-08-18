@@ -1397,9 +1397,9 @@ version = "1.2.12"
 
 [[StatisticalRethinking]]
 deps = ["AxisArrays", "BSplines", "BrowseTables", "CSV", "DataFrames", "Distributions", "DocStringExtensions", "DrWatson", "Formatting", "GLM", "GR", "KernelDensity", "LaTeXStrings", "LinearAlgebra", "MCMCChains", "MonteCarloMeasurements", "NamedArrays", "NamedTupleTools", "Optim", "OrderedCollections", "Parameters", "ParetoSmooth", "Pkg", "Pluto", "PlutoUI", "PrettyTables", "Random", "Reexport", "Requires", "Statistics", "StatsBase", "StatsFuns", "StatsModelComparisons", "StatsPlots", "StructuralCausalModels", "Tables", "Test", "Unicode"]
-git-tree-sha1 = "7f0a3946084aa91e72be0a5ee988530a5b5edb38"
-repo-rev = "master"
-repo-url = "https://github.com/StatisticalRethinkingJulia/StatisticalRethinking.jl.git"
+git-tree-sha1 = "6814073d1942663736101cdca49c0acd921c404f"
+repo-rev = "coeftab"
+repo-url = "https://github.com/Shmuma/StatisticalRethinking.jl"
 uuid = "2d09df54-9d0f-5258-8220-54c2a3d4fbee"
 version = "3.4.5"
 
