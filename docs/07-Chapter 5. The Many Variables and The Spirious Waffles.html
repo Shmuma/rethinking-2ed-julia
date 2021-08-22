@@ -18139,7 +18139,7 @@ M316.512 714.333 L384.682 706.814 L452.852 718.988 L521.023 709.626 L589.193 730
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[37]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[52]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-julia"><pre><span></span><span class="nd">@model</span> <span class="k">function</span> <span class="n">model_m5_5_draft</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
@@ -18150,7 +18150,14 @@ M316.512 714.333 L384.682 706.814 L452.852 718.988 L521.023 709.626 L589.193 730
     <span class="n">K</span> <span class="o">~</span> <span class="n">MvNormal</span><span class="p">(</span><span class="n">μ</span><span class="p">,</span> <span class="n">σ</span><span class="p">)</span>
 <span class="k">end</span>
 
-<span class="n">m5_5_draft</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">model_m5_5_draft</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">N</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">K</span><span class="p">),</span> <span class="n">NUTS</span><span class="p">(),</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="k">try</span>
+    <span class="n">m5_5_draft</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">model_m5_5_draft</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">N</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">K</span><span class="p">),</span> <span class="n">NUTS</span><span class="p">(),</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="k">catch</span> <span class="n">e</span>
+    <span class="k">if</span> <span class="k">isa</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="kt">MethodError</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">sprint</span><span class="p">(</span><span class="n">showerror</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+        <span class="n">println</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">end</span>
+<span class="k">end</span>
 </pre></div>
 
      </div>
@@ -18169,69 +18176,13 @@ M316.512 714.333 L384.682 706.814 L452.852 718.988 L521.023 709.626 L589.193 730
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>
-MethodError: no method matching MvNormal(::Vector{Union{Missing, Float64}}, ::Float64)
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>MethodError: no method matching MvNormal(::Vector{Union{Missing, Float64}}, ::Float64)
 Closest candidates are:
-  MvNormal(<span class="ansi-red-intense-fg">::Tracker.TrackedVector{var&#34;#s50&#34;, A} where {var&#34;#s50&#34;&lt;:Real, A}</span>, ::Real) at /home/shmuma/.julia/packages/DistributionsAD/WaBSG/src/tracker.jl:468
-  MvNormal(<span class="ansi-red-intense-fg">::AbstractVector{var&#34;#s464&#34;} where var&#34;#s464&#34;&lt;:Real</span>, ::Real) at deprecated.jl:70
-  MvNormal(<span class="ansi-red-intense-fg">::Int64</span>, ::Real) at deprecated.jl:70
-
-Stacktrace:
-  [1] #31
-    @ ./In[37]:6 [inlined]
-  [2] (::var&#34;#31#32&#34;)(__model__::DynamicPPL.Model{var&#34;#31#32&#34;, (:N, :K), (), (), Tuple{Vector{Union{Missing, Float64}}, Vector{Float64}}, Tuple{}, DynamicPPL.DefaultContext}, __varinfo__::DynamicPPL.UntypedVarInfo{DynamicPPL.Metadata{Dict{AbstractPPL.VarName, Int64}, Vector{Distribution}, Vector{AbstractPPL.VarName}, Vector{Real}, Vector{Set{DynamicPPL.Selector}}}, Float64}, __context__::DynamicPPL.SamplingContext{DynamicPPL.SampleFromUniform, DynamicPPL.DefaultContext, Random._GLOBAL_RNG}, N::Vector{Union{Missing, Float64}}, K::Vector{Float64})
-    @ Main ./none:0
-  [3] macro expansion
-    @ ~/.julia/packages/DynamicPPL/yvQQ0/src/model.jl:465 [inlined]
-  [4] _evaluate
-    @ ~/.julia/packages/DynamicPPL/yvQQ0/src/model.jl:448 [inlined]
-  [5] evaluate_threadunsafe
-    @ ~/.julia/packages/DynamicPPL/yvQQ0/src/model.jl:421 [inlined]
-  [6] Model
-    @ ~/.julia/packages/DynamicPPL/yvQQ0/src/model.jl:389 [inlined]
-  [7] Model
-    @ ~/.julia/packages/DynamicPPL/yvQQ0/src/model.jl:383 [inlined]
-  [8] DynamicPPL.VarInfo(rng::Random._GLOBAL_RNG, model::DynamicPPL.Model{var&#34;#31#32&#34;, (:N, :K), (), (), Tuple{Vector{Union{Missing, Float64}}, Vector{Float64}}, Tuple{}, DynamicPPL.DefaultContext}, sampler::DynamicPPL.SampleFromUniform, context::DynamicPPL.DefaultContext)
-    @ DynamicPPL ~/.julia/packages/DynamicPPL/yvQQ0/src/varinfo.jl:132
-  [9] VarInfo
-    @ ~/.julia/packages/DynamicPPL/yvQQ0/src/varinfo.jl:131 [inlined]
- [10] step(rng::Random._GLOBAL_RNG, model::DynamicPPL.Model{var&#34;#31#32&#34;, (:N, :K), (), (), Tuple{Vector{Union{Missing, Float64}}, Vector{Float64}}, Tuple{}, DynamicPPL.DefaultContext}, spl::DynamicPPL.Sampler{NUTS{Turing.Core.ForwardDiffAD{40}, (), AdvancedHMC.DiagEuclideanMetric}}; resume_from::Nothing, kwargs::Base.Iterators.Pairs{Symbol, Int64, Tuple{Symbol}, NamedTuple{(:nadapts,), Tuple{Int64}}})
-    @ DynamicPPL ~/.julia/packages/DynamicPPL/yvQQ0/src/sampler.jl:69
- [11] macro expansion
-    @ ~/.julia/packages/AbstractMCMC/BPJCW/src/sample.jl:123 [inlined]
- [12] macro expansion
-    @ ~/.julia/packages/ProgressLogging/6KXlp/src/ProgressLogging.jl:328 [inlined]
- [13] (::AbstractMCMC.var&#34;#21#22&#34;{Bool, String, Nothing, Int64, Int64, Base.Iterators.Pairs{Symbol, Int64, Tuple{Symbol}, NamedTuple{(:nadapts,), Tuple{Int64}}}, Random._GLOBAL_RNG, DynamicPPL.Model{var&#34;#31#32&#34;, (:N, :K), (), (), Tuple{Vector{Union{Missing, Float64}}, Vector{Float64}}, Tuple{}, DynamicPPL.DefaultContext}, DynamicPPL.Sampler{NUTS{Turing.Core.ForwardDiffAD{40}, (), AdvancedHMC.DiagEuclideanMetric}}, Int64, Int64})()
-    @ AbstractMCMC ~/.julia/packages/AbstractMCMC/BPJCW/src/logging.jl:11
- [14] with_logstate(f::Function, logstate::Any)
-    @ Base.CoreLogging ./logging.jl:491
- [15] with_logger(f::Function, logger::LoggingExtras.TeeLogger{Tuple{LoggingExtras.EarlyFilteredLogger{ConsoleProgressMonitor.ProgressLogger, AbstractMCMC.var&#34;#1#3&#34;{Module}}, LoggingExtras.EarlyFilteredLogger{Base.CoreLogging.SimpleLogger, AbstractMCMC.var&#34;#2#4&#34;{Module}}}})
-    @ Base.CoreLogging ./logging.jl:603
- [16] with_progresslogger(f::Function, _module::Module, logger::Base.CoreLogging.SimpleLogger)
-    @ AbstractMCMC ~/.julia/packages/AbstractMCMC/BPJCW/src/logging.jl:34
- [17] macro expansion
-    @ ~/.julia/packages/AbstractMCMC/BPJCW/src/logging.jl:10 [inlined]
- [18] mcmcsample(rng::Random._GLOBAL_RNG, model::DynamicPPL.Model{var&#34;#31#32&#34;, (:N, :K), (), (), Tuple{Vector{Union{Missing, Float64}}, Vector{Float64}}, Tuple{}, DynamicPPL.DefaultContext}, sampler::DynamicPPL.Sampler{NUTS{Turing.Core.ForwardDiffAD{40}, (), AdvancedHMC.DiagEuclideanMetric}}, N::Int64; progress::Bool, progressname::String, callback::Nothing, discard_initial::Int64, thinning::Int64, chain_type::Type, kwargs::Base.Iterators.Pairs{Symbol, Int64, Tuple{Symbol}, NamedTuple{(:nadapts,), Tuple{Int64}}})
-    @ AbstractMCMC ~/.julia/packages/AbstractMCMC/BPJCW/src/sample.jl:114
- [19] sample(rng::Random._GLOBAL_RNG, model::DynamicPPL.Model{var&#34;#31#32&#34;, (:N, :K), (), (), Tuple{Vector{Union{Missing, Float64}}, Vector{Float64}}, Tuple{}, DynamicPPL.DefaultContext}, sampler::DynamicPPL.Sampler{NUTS{Turing.Core.ForwardDiffAD{40}, (), AdvancedHMC.DiagEuclideanMetric}}, N::Int64; chain_type::Type, resume_from::Nothing, progress::Bool, nadapts::Int64, discard_adapt::Bool, discard_initial::Int64, kwargs::Base.Iterators.Pairs{Union{}, Union{}, Tuple{}, NamedTuple{(), Tuple{}}})
-    @ Turing.Inference ~/.julia/packages/Turing/Ysmbf/src/inference/hmc.jl:133
- [20] sample
-    @ ~/.julia/packages/Turing/Ysmbf/src/inference/hmc.jl:116 [inlined]
- [21] #sample#2
-    @ ~/.julia/packages/Turing/Ysmbf/src/inference/Inference.jl:142 [inlined]
- [22] sample
-    @ ~/.julia/packages/Turing/Ysmbf/src/inference/Inference.jl:142 [inlined]
- [23] #sample#1
-    @ ~/.julia/packages/Turing/Ysmbf/src/inference/Inference.jl:132 [inlined]
- [24] sample(model::DynamicPPL.Model{var&#34;#31#32&#34;, (:N, :K), (), (), Tuple{Vector{Union{Missing, Float64}}, Vector{Float64}}, Tuple{}, DynamicPPL.DefaultContext}, alg::NUTS{Turing.Core.ForwardDiffAD{40}, (), AdvancedHMC.DiagEuclideanMetric}, N::Int64)
-    @ Turing.Inference ~/.julia/packages/Turing/Ysmbf/src/inference/Inference.jl:132
- [25] top-level scope
-    @ In[37]:9
- [26] eval
-    @ ./boot.jl:360 [inlined]
- [27] include_string(mapexpr::typeof(REPL.softscope), mod::Module, code::String, filename::String)
-    @ Base ./loading.jl:1116</pre>
+  MvNormal(!Matched::Tracker.TrackedVector{var&#34;#s50&#34;, A} where {var&#34;#s50&#34;&lt;:Real, A}, ::Real) at /home/shmuma/.julia/packages/DistributionsAD/WaBSG/src/tracker.jl:468
+  MvNormal(!Matched::AbstractVector{var&#34;#s464&#34;} where var&#34;#s464&#34;&lt;:Real, ::Real) at deprecated.jl:70
+  MvNormal(!Matched::Int64, ::Real) at deprecated.jl:70
+</pre>
 </div>
 </div>
 
