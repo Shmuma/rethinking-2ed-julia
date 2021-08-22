@@ -1268,9 +1268,9 @@ uuid = "f2c3362d-daeb-58d1-803e-2bc74f2840b4"
 version = "0.2.2"
 
 [[Reexport]]
-git-tree-sha1 = "5f6c21241f0f655da3952fd60aa18477cf96c220"
+git-tree-sha1 = "adcd36e8ba9665c88eb0bd156d4e2a19f9b0d889"
 uuid = "189a3867-3050-52da-a836-e630ba90ab69"
-version = "1.1.0"
+version = "1.2.0"
 
 [[Requires]]
 deps = ["UUIDs"]
@@ -1397,8 +1397,8 @@ version = "1.2.12"
 
 [[StatisticalRethinking]]
 deps = ["AxisArrays", "BSplines", "BrowseTables", "CSV", "DataFrames", "Distributions", "DocStringExtensions", "DrWatson", "Formatting", "GLM", "GR", "KernelDensity", "LaTeXStrings", "LinearAlgebra", "MCMCChains", "MonteCarloMeasurements", "NamedArrays", "NamedTupleTools", "Optim", "OrderedCollections", "Parameters", "ParetoSmooth", "Pkg", "Pluto", "PlutoUI", "PrettyTables", "Random", "Reexport", "Requires", "Statistics", "StatsBase", "StatsFuns", "StatsModelComparisons", "StatsPlots", "StructuralCausalModels", "Tables", "Test", "Unicode"]
-git-tree-sha1 = "2017b0b47c1ad5f61adc8a55ff3c77ea7666c240"
-repo-rev = "PI"
+git-tree-sha1 = "170ad0df8d892ff1be3aee0bedc8980f067a31ee"
+repo-rev = "coeftab_names"
 repo-url = "https://github.com/Shmuma/StatisticalRethinking.jl"
 uuid = "2d09df54-9d0f-5258-8220-54c2a3d4fbee"
 version = "3.4.5"
