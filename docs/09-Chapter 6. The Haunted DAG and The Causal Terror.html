@@ -17246,7 +17246,7 @@ M247.084 1423.18 L2352.76 1423.18 L2352.76 47.2441 L247.084 47.2441  Z
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="6.2-Post-treatment-bias">6.2 Post-treatment bias<a class="anchor-link" href="#6.2-Post-treatment-bias">&#182;</a></h2>
+<h1 id="6.2-Post-treatment-bias">6.2 Post-treatment bias<a class="anchor-link" href="#6.2-Post-treatment-bias">&#182;</a></h1>
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
@@ -17836,6 +17836,157 @@ amount2:1-d})};a.filter.invert.toString=function(){return this()};a.filter.brigh
 
 </div>
 
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Code 6.20</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[30]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">Random</span><span class="o">.</span><span class="n">seed!</span><span class="p">(</span><span class="mi">70</span><span class="p">)</span>
+<span class="c"># number of plants</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">h0</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">treatment</span> <span class="o">=</span> <span class="n">repeat</span><span class="p">(</span><span class="mi">0</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span> <span class="n">inner</span><span class="o">=</span><span class="n">div</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">M</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="n">Bernoulli</span><span class="p">(),</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">fungus</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">rand</span><span class="p">(</span><span class="n">Binomial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">-</span> <span class="n">treat</span><span class="o">*</span><span class="mf">0.4</span> <span class="o">+</span> <span class="mf">0.4</span> <span class="o">*</span> <span class="n">m</span><span class="p">))</span> 
+    <span class="k">for</span> <span class="p">(</span><span class="n">treat</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="o">∈</span> <span class="n">zip</span><span class="p">(</span><span class="n">treatment</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+<span class="p">]</span>
+<span class="n">h1</span> <span class="o">=</span> <span class="n">h0</span> <span class="o">.+</span> <span class="n">rand</span><span class="p">(</span><span class="n">MvNormal</span><span class="p">(</span><span class="mi">5</span> <span class="o">.+</span> <span class="mi">3</span> <span class="o">.*</span> <span class="n">M</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">d2</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="ss">:h0</span> <span class="o">=&gt;</span> <span class="n">h0</span><span class="p">,</span> <span class="ss">:h1</span> <span class="o">=&gt;</span> <span class="n">h1</span><span class="p">,</span> <span class="ss">:treatment</span> <span class="o">=&gt;</span> <span class="n">treatment</span><span class="p">,</span> <span class="ss">:fungus</span> <span class="o">=&gt;</span> <span class="n">fungus</span><span class="p">)</span>
+<span class="n">precis</span><span class="p">(</span><span class="n">d2</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>┌───────────┬────────────────────────────────────────────────────────────┐
+│<span class="ansi-bold">     param </span>│<span class="ansi-bold">    mean </span><span class="ansi-bold">    std </span><span class="ansi-bold">    5.5% </span><span class="ansi-bold">     50% </span><span class="ansi-bold">   94.5% </span><span class="ansi-bold">      histogram </span>│
+├───────────┼────────────────────────────────────────────────────────────┤
+│        h0 │ 10.0411  2.0531   6.7597   9.9194  13.2845  ▁▁▁▂▄▆█▇▆▄▂▁▁▁ │
+│        h1 │ 16.5145  2.8202  12.0612  16.5204  21.1399       ▁▂▅▇█▆▃▁▁ │
+│ treatment │     0.5  0.5003      0.0      0.5      1.0     █▁▁▁▁▁▁▁▁▁█ │
+│    fungus │   0.511  0.5001      0.0      1.0      1.0     █▁▁▁▁▁▁▁▁▁█ │
+└───────────┴────────────────────────────────────────────────────────────┘
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[29]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">m6_7</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">model_m6_7</span><span class="p">(</span><span class="n">d2</span><span class="o">.</span><span class="n">h0</span><span class="p">,</span> <span class="n">d2</span><span class="o">.</span><span class="n">treatment</span><span class="p">,</span> <span class="n">d2</span><span class="o">.</span><span class="n">fungus</span><span class="p">,</span> <span class="n">d2</span><span class="o">.</span><span class="n">h1</span><span class="p">),</span> <span class="n">NUTS</span><span class="p">(),</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">precis</span><span class="p">(</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">m6_7</span><span class="p">))</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>┌───────┬────────────────────────────────────────────────────┐
+│<span class="ansi-bold"> param </span>│<span class="ansi-bold">   mean </span><span class="ansi-bold">    std </span><span class="ansi-bold">   5.5% </span><span class="ansi-bold">    50% </span><span class="ansi-bold">  94.5% </span><span class="ansi-bold">  histogram </span>│
+├───────┼────────────────────────────────────────────────────┤
+│     a │ 1.5197  0.0131  1.4992  1.5194   1.541  ▁▁▂▅██▅▂▁▁ │
+│    bt │ 0.0624  0.0137  0.0398  0.0618  0.0857   ▁▂▃██▆▃▁▁ │
+│    bf │ 0.1339  0.0135  0.1123  0.1339  0.1556  ▁▁▁▃▇█▆▃▁▁ │
+│     σ │ 2.0857  0.0453  2.0126   2.084  2.1589     ▁▁▄█▆▂▁ │
+└───────┴────────────────────────────────────────────────────┘
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[28]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">m6_8</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">model_m6_8</span><span class="p">(</span><span class="n">d2</span><span class="o">.</span><span class="n">h0</span><span class="p">,</span> <span class="n">d2</span><span class="o">.</span><span class="n">treatment</span><span class="p">,</span> <span class="n">d2</span><span class="o">.</span><span class="n">h1</span><span class="p">),</span> <span class="n">NUTS</span><span class="p">(),</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">precis</span><span class="p">(</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">m6_8</span><span class="p">))</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>┌───────┬─────────────────────────────────────────────────────┐
+│<span class="ansi-bold"> param </span>│<span class="ansi-bold">   mean </span><span class="ansi-bold">    std </span><span class="ansi-bold">    5.5% </span><span class="ansi-bold">    50% </span><span class="ansi-bold">  94.5% </span><span class="ansi-bold">  histogram </span>│
+├───────┼─────────────────────────────────────────────────────┤
+│     a │ 1.6182  0.0099   1.6031  1.6183   1.634   ▁▁▁▄█▆▂▁▁ │
+│    bt │ 0.0044   0.014  -0.0175   0.004  0.0272  ▁▁▁▃▇█▇▃▁▁ │
+│     σ │ 2.1748  0.0468   2.1016   2.174  2.2477     ▁▁▅█▅▁▁ │
+└───────┴─────────────────────────────────────────────────────┘
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h1 id="6.3-Collider-bias">6.3 Collider bias<a class="anchor-link" href="#6.3-Collider-bias">&#182;</a></h1>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
