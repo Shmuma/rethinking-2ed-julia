@@ -14,11 +14,11 @@ but please first try to solve them yourself, as it is much more fun (in addition
 * [Preface](00-Preface.html)
 * [Chapter 1. The Golem of Prague (no code)](01-Chapter 1. The Golem of Prague.html)
 * [Chapter 2. Small Worlds and Large World](02-Chapter 2. Small Worlds and Large World.html)
-* [Chapter 3. Sampling the Imaginary](03-Chapter 3. Sampling the Imaginary.html) - [Practice template](04-Practice for chapter 3.html)
-* [Chapter 4. Geocentric Models](05-Chapter 4. Geocentric Models.html) - [Practice template](06-Practice for chapter 4.html)
-* [Chapter 5. The Many Variables and The Spirious Waffles](07-Chapter 5. The Many Variables and The Spirious Waffles.html) - [Practice template](08-Practice for chapter 5.html)
-* [Chapter 6. The Haunted DAG and The Causal Terror](09-Chapter 6. The Haunted DAG and The Causal Terror.html) - [Practice template](10-Practice for chapter 6.html)
-* [Chapter 7. Ulysses' Compass](11-Chapter 7. Ulysses' Compass.html)
+* [Chapter 3. Sampling the Imaginary](03-Chapter 3. Sampling the Imaginary.html) - [Practice template](03-Practice for chapter 3.html)
+* [Chapter 4. Geocentric Models](04-Chapter 4. Geocentric Models.html)
+* [Chapter 5. The Many Variables and The Spirious Waffles](05-Chapter 5. The Many Variables and The Spirious Waffles.html)
+* [Chapter 6. The Haunted DAG and The Causal Terror](06-Chapter 6. The Haunted DAG and The Causal Terror.html)
+* [Chapter 7. Ulysses' Compass](07-Chapter 7. Ulysses' Compass.html)
 
 More chapters to come, stay tuned!
 
