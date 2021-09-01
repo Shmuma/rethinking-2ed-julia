@@ -312,7 +312,7 @@ version = "4.0.4"
 
 [[Dagitty]]
 deps = ["BenchmarkTools", "Combinatorics", "Compose", "DataStructures", "Documenter", "GraphPlot", "LightGraphs", "Test"]
-git-tree-sha1 = "2096770753411e3a69b7990a35ac3a5b4abcee69"
+git-tree-sha1 = "f67d4a7d311ac2498ce6e178e22a3bd6b06ef6d6"
 repo-rev = "main"
 repo-url = "https://github.com/Shmuma/Dagitty.jl"
 uuid = "d56128e0-8113-48cd-82a0-fc808dc30d4b"
@@ -601,9 +601,9 @@ version = "1.0.2"
 
 [[HTTP]]
 deps = ["Base64", "Dates", "IniFile", "Logging", "MbedTLS", "NetworkOptions", "Sockets", "URIs"]
-git-tree-sha1 = "44e3b40da000eab4ccb1aecdc4801c040026aeb5"
+git-tree-sha1 = "60ed5f1643927479f845b0135bb369b031b541fa"
 uuid = "cd3eb016-35fb-5094-929b-558a96fad6f3"
-version = "0.9.13"
+version = "0.9.14"
 
 [[HostCPUFeatures]]
 deps = ["IfElse", "Libdl", "Static"]
@@ -1160,9 +1160,9 @@ version = "0.3.9"
 
 [[PooledArrays]]
 deps = ["DataAPI", "Future"]
-git-tree-sha1 = "cde4ce9d6f33219465b55162811d8de8139c0414"
+git-tree-sha1 = "a193d6ad9c45ada72c14b731a318bedd3c2f00cf"
 uuid = "2dfb63ee-cc39-5dd5-95bd-886bf059d720"
-version = "1.2.1"
+version = "1.3.0"
 
 [[Preferences]]
 deps = ["TOML"]
