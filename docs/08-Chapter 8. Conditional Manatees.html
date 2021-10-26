@@ -14670,6 +14670,209 @@ M249.542 1423.18 L2352.76 1423.18 L2352.76 118.419 L249.542 118.419  Z
 
 </div>
 
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Code 8.7</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[72]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">dd</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="ss">:cid</span><span class="p">]</span> <span class="o">=</span> <span class="nd">@.</span> <span class="n">ifelse</span><span class="p">(</span><span class="n">dd</span><span class="o">.</span><span class="n">cont_africa</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Code 8.8</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[74]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-julia"><pre><span></span><span class="nd">@model</span> <span class="k">function</span> <span class="n">model_m8_2</span><span class="p">(</span><span class="n">rugged_std</span><span class="p">,</span> <span class="n">cid</span><span class="p">,</span>  <span class="n">log_gdp_std</span><span class="p">)</span>
+    <span class="n">σ</span> <span class="o">~</span> <span class="n">Exponential</span><span class="p">()</span>
+    <span class="n">a</span> <span class="o">~</span> <span class="n">MvNormal</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">~</span> <span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">)</span>
+    <span class="n">μ</span> <span class="o">=</span> <span class="nd">@.</span> <span class="n">a</span><span class="p">[</span><span class="n">cid</span><span class="p">]</span> <span class="o">+</span> <span class="n">b</span> <span class="o">*</span> <span class="p">(</span><span class="n">rugged_std</span> <span class="o">-</span> <span class="n">r̄</span><span class="p">)</span>
+    <span class="n">log_gdp_std</span> <span class="o">~</span> <span class="n">MvNormal</span><span class="p">(</span><span class="n">μ</span><span class="p">,</span> <span class="n">σ</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="n">m8_2</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">model_m8_2</span><span class="p">(</span><span class="n">dd</span><span class="o">.</span><span class="n">rugged_std</span><span class="p">,</span> <span class="n">dd</span><span class="o">.</span><span class="n">cid</span><span class="p">,</span>  <span class="n">dd</span><span class="o">.</span><span class="n">log_gdp_std</span><span class="p">),</span> <span class="n">NUTS</span><span class="p">(),</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">m8_2_df</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">m8_2</span><span class="p">);</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Code 8.9</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[101]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-julia"><pre><span></span><span class="c"># Compute log likelihoods for both models</span>
+<span class="n">fun</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="n">normlogpdf</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">a</span> <span class="o">+</span> <span class="n">r</span><span class="o">.</span><span class="n">b</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">r̄</span><span class="p">),</span> <span class="n">r</span><span class="o">.</span><span class="n">σ</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">m8_1_ll</span> <span class="o">=</span> <span class="n">link</span><span class="p">(</span><span class="n">m8_1_df</span><span class="p">,</span> <span class="n">fun</span><span class="p">,</span> <span class="n">zip</span><span class="p">(</span><span class="n">dd</span><span class="o">.</span><span class="n">rugged_std</span><span class="p">,</span> <span class="n">dd</span><span class="o">.</span><span class="n">log_gdp_std</span><span class="p">))</span>
+<span class="n">m8_1_ll</span> <span class="o">=</span> <span class="n">hcat</span><span class="p">(</span><span class="n">m8_1_ll</span><span class="o">...</span><span class="p">)</span>
+
+<span class="c"># need DF with a as a vector of both a[1] and a[2]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">m8_2_df</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="o">!</span><span class="p">,</span><span class="ss">:a</span><span class="p">]</span> <span class="o">=</span> <span class="n">collect</span><span class="o">.</span><span class="p">(</span><span class="n">zip</span><span class="p">(</span><span class="n">m8_2_df</span><span class="o">.:</span><span class="s">&quot;a[1]&quot;</span><span class="p">,</span> <span class="n">m8_2_df</span><span class="o">.:</span><span class="s">&quot;a[2]&quot;</span><span class="p">))</span>
+
+<span class="n">fun</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">y</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="n">normlogpdf</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">a</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">+</span> <span class="n">r</span><span class="o">.</span><span class="n">b</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">r̄</span><span class="p">),</span> <span class="n">r</span><span class="o">.</span><span class="n">σ</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">m8_2_ll</span> <span class="o">=</span> <span class="n">link</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">fun</span><span class="p">,</span> <span class="n">zip</span><span class="p">(</span><span class="n">dd</span><span class="o">.</span><span class="n">rugged_std</span><span class="p">,</span> <span class="n">dd</span><span class="o">.</span><span class="n">cid</span><span class="p">,</span> <span class="n">dd</span><span class="o">.</span><span class="n">log_gdp_std</span><span class="p">))</span>
+<span class="n">m8_2_ll</span> <span class="o">=</span> <span class="n">hcat</span><span class="p">(</span><span class="n">m8_2_ll</span><span class="o">...</span><span class="p">);</span>
+
+<span class="n">compare</span><span class="p">([</span><span class="n">m8_1_ll</span><span class="p">,</span> <span class="n">m8_2_ll</span><span class="p">],</span> <span class="ss">:waic</span><span class="p">,</span> <span class="n">mnames</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;m8.1&quot;</span><span class="p">,</span> <span class="s">&quot;m8.2&quot;</span><span class="p">])</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[101]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div class="data-frame"><p>2 rows × 8 columns</p><table class="data-frame"><thead><tr><th></th><th>models</th><th>WAIC</th><th>lppd</th><th>SE</th><th>dWAIC</th><th>dSE</th><th>pWAIC</th><th>weight</th></tr><tr><th></th><th title="String">String</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th></tr></thead><tbody><tr><th>1</th><td>m8.2</td><td>-252.2</td><td>-260.52</td><td>14.84</td><td>0.0</td><td>0.0</td><td>4.18</td><td>1.0</td></tr><tr><th>2</th><td>m8.1</td><td>-188.9</td><td>-193.98</td><td>12.95</td><td>63.3</td><td>14.7</td><td>2.53</td><td>0.0</td></tr></tbody></table></div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Code 8.10</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[91]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">precis</span><span class="p">(</span><span class="n">m8_2_df</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>┌───────┬─────────────────────────────────────────────────────────┐
+│<span class="ansi-bold"> param </span>│<span class="ansi-bold">    mean </span><span class="ansi-bold">    std </span><span class="ansi-bold">    5.5% </span><span class="ansi-bold">     50% </span><span class="ansi-bold">  94.5% </span><span class="ansi-bold">    histogram </span>│
+├───────┼─────────────────────────────────────────────────────────┤
+│  a[1] │  0.8805  0.0169   0.8538   0.8802  0.9066  ▁▁▁▃▆██▆▄▂▁▁ │
+│  a[2] │  1.0492  0.0103   1.0329   1.0494  1.0662       ▁▁▄██▃▁ │
+│     b │ -0.0465  0.0453  -0.1146  -0.0465  0.0267        ▁▃██▃▁ │
+│     σ │  0.1141  0.0063   0.1042   0.1141  0.1243     ▁▁▂▆██▄▁▁ │
+└───────┴─────────────────────────────────────────────────────────┘
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Code 8.11</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[96]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">PI</span><span class="p">(</span><span class="n">map</span><span class="p">(</span><span class="n">r</span> <span class="o">-&gt;</span> <span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">r</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">m8_2_a</span><span class="p">))</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[96]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>2-element Vector{Float64}:
+ -0.20193898335654065
+ -0.1384096203949567</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Code 8.12</p>
+
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
