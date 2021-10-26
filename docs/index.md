@@ -19,6 +19,7 @@ but please first try to solve them yourself, as it is much more fun (in addition
 * [Chapter 5. The Many Variables and The Spirious Waffles](05-Chapter 5. The Many Variables and The Spirious Waffles.html)
 * [Chapter 6. The Haunted DAG and The Causal Terror](06-Chapter 6. The Haunted DAG and The Causal Terror.html)
 * [Chapter 7. Ulysses' Compass](07-Chapter 7. Ulysses' Compass.html)
+* [Chapter 8. Conditional manatees](08-Chapter 8. Conditional Manatees.html)
 
 More chapters to come, stay tuned!
 
