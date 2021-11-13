@@ -16361,6 +16361,281 @@ M315.882 1243.28 L384.074 1214.94 L452.265 1186.59 L520.456 1158.25 L588.647 112
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h1 id="8.3-Continuous-interaction">8.3 Continuous interaction<a class="anchor-link" href="#8.3-Continuous-interaction">&#182;</a></h1>
 </div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Code 8.19</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[25]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">CSV</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s">&quot;data/tulips.csv&quot;</span><span class="p">))</span>
+<span class="n">describe</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[25]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div class="data-frame"><p>4 rows × 7 columns</p><table class="data-frame"><thead><tr><th></th><th>variable</th><th>mean</th><th>min</th><th>median</th><th>max</th><th>nmissing</th><th>eltype</th></tr><tr><th></th><th title="Symbol">Symbol</th><th title="Union{Nothing, Float64}">Union…</th><th title="Any">Any</th><th title="Union{Nothing, Float64}">Union…</th><th title="Any">Any</th><th title="Int64">Int64</th><th title="DataType">DataType</th></tr></thead><tbody><tr><th>1</th><td>bed</td><td></td><td>a</td><td></td><td>c</td><td>0</td><td>String1</td></tr><tr><th>2</th><td>water</td><td>2.0</td><td>1</td><td>2.0</td><td>3</td><td>0</td><td>Int64</td></tr><tr><th>3</th><td>shade</td><td>2.0</td><td>1</td><td>2.0</td><td>3</td><td>0</td><td>Int64</td></tr><tr><th>4</th><td>blooms</td><td>128.994</td><td>0.0</td><td>111.04</td><td>361.66</td><td>0</td><td>Float64</td></tr></tbody></table></div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Code 8.20</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[30]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">d</span><span class="o">.</span><span class="n">blooms_std</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">blooms</span> <span class="o">/</span> <span class="n">maximum</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">blooms</span><span class="p">)</span>
+<span class="n">d</span><span class="o">.</span><span class="n">water_cent</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">water</span> <span class="o">.-</span> <span class="n">mean</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">water</span><span class="p">)</span>
+<span class="n">d</span><span class="o">.</span><span class="n">shade_cent</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">shade</span> <span class="o">.-</span> <span class="n">mean</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">shade</span><span class="p">);</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Code 8.21</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[28]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">Random</span><span class="o">.</span><span class="n">seed!</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">10</span><span class="o">^</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">sum</span><span class="p">(</span><span class="nd">@.</span> <span class="p">(</span><span class="n">a</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="n">length</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[28]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>0.6176</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Code 8.22</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[29]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">Random</span><span class="o">.</span><span class="n">seed!</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">),</span> <span class="mi">10</span><span class="o">^</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">sum</span><span class="p">(</span><span class="nd">@.</span> <span class="p">(</span><span class="n">a</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="n">length</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[29]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>0.0469</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Code 8.23</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[31]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-julia"><pre><span></span><span class="nd">@model</span> <span class="k">function</span> <span class="n">m8_4</span><span class="p">(</span><span class="n">water_cent</span><span class="p">,</span> <span class="n">shade_cent</span><span class="p">,</span> <span class="n">blooms_std</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">~</span> <span class="n">Normal</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">)</span>
+    <span class="n">bw</span> <span class="o">~</span> <span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">)</span>
+    <span class="n">bs</span> <span class="o">~</span> <span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">)</span>
+    <span class="n">μ</span> <span class="o">=</span> <span class="nd">@.</span> <span class="n">a</span> <span class="o">+</span> <span class="n">bw</span><span class="o">*</span><span class="n">water_cent</span> <span class="o">+</span> <span class="n">bs</span><span class="o">*</span><span class="n">shade_cent</span>
+    <span class="n">σ</span> <span class="o">~</span> <span class="n">Exponential</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">blooms_std</span> <span class="o">~</span> <span class="n">MvNormal</span><span class="p">(</span><span class="n">μ</span><span class="p">,</span> <span class="n">σ</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="n">m8_4_c</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">m8_4</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">water_cent</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">shade_cent</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">blooms_std</span><span class="p">),</span> <span class="n">NUTS</span><span class="p">(),</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">m8_4_df</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">m8_4_c</span><span class="p">)</span>
+<span class="n">precis</span><span class="p">(</span><span class="n">m8_4_df</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>┌───────┬──────────────────────────────────────────────────────────┐
+│<span class="ansi-bold"> param </span>│<span class="ansi-bold">    mean </span><span class="ansi-bold">    std </span><span class="ansi-bold">   5.5% </span><span class="ansi-bold">     50% </span><span class="ansi-bold">   94.5% </span><span class="ansi-bold">     histogram </span>│
+├───────┼──────────────────────────────────────────────────────────┤
+│     a │  0.3584  0.0356  0.3019    0.359   0.4171   ▁▁▂▃▆██▅▃▂▁▁ │
+│    bs │ -0.1125  0.0416  -0.178  -0.1127  -0.0424  ▁▁▂▄▅▇█▇▅▃▂▁▁ │
+│    bw │  0.2059  0.0416  0.1399   0.2064    0.271         ▁▂▇█▃▁ │
+│     σ │  0.1775  0.0257  0.1413   0.1757   0.2211      ▂▇██▃▂▁▁▁ │
+└───────┴──────────────────────────────────────────────────────────┘
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Code 8.24</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[32]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-julia"><pre><span></span><span class="nd">@model</span> <span class="k">function</span> <span class="n">m8_5</span><span class="p">(</span><span class="n">water_cent</span><span class="p">,</span> <span class="n">shade_cent</span><span class="p">,</span> <span class="n">blooms_std</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">~</span> <span class="n">Normal</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">)</span>
+    <span class="n">bw</span> <span class="o">~</span> <span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">)</span>
+    <span class="n">bs</span> <span class="o">~</span> <span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">)</span>
+    <span class="n">bws</span> <span class="o">~</span> <span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">)</span>
+    <span class="n">μ</span> <span class="o">=</span> <span class="nd">@.</span> <span class="n">a</span> <span class="o">+</span> <span class="n">bw</span><span class="o">*</span><span class="n">water_cent</span> <span class="o">+</span> <span class="n">bs</span><span class="o">*</span><span class="n">shade_cent</span> <span class="o">+</span> <span class="n">bws</span><span class="o">*</span><span class="n">water_cent</span><span class="o">*</span><span class="n">shade_cent</span>
+    <span class="n">σ</span> <span class="o">~</span> <span class="n">Exponential</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">blooms_std</span> <span class="o">~</span> <span class="n">MvNormal</span><span class="p">(</span><span class="n">μ</span><span class="p">,</span> <span class="n">σ</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="n">m8_5_c</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">m8_5</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">water_cent</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">shade_cent</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">blooms_std</span><span class="p">),</span> <span class="n">NUTS</span><span class="p">(),</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">m8_5_df</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">m8_5_c</span><span class="p">)</span>
+<span class="n">precis</span><span class="p">(</span><span class="n">m8_5_df</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>┌───────┬────────────────────────────────────────────────────────────┐
+│<span class="ansi-bold"> param </span>│<span class="ansi-bold">    mean </span><span class="ansi-bold">    std </span><span class="ansi-bold">    5.5% </span><span class="ansi-bold">     50% </span><span class="ansi-bold">   94.5% </span><span class="ansi-bold">      histogram </span>│
+├───────┼────────────────────────────────────────────────────────────┤
+│     a │  0.3584  0.0268   0.3153   0.3591   0.3993      ▁▁▂▅▇█▄▂▁▁ │
+│    bs │ -0.1136   0.034  -0.1673  -0.1146  -0.0607  ▁▁▁▂▄██▇▃▂▁▁▁▁ │
+│    bw │  0.2083  0.0322   0.1572   0.2078   0.2604   ▁▁▁▂▅██▇▅▂▁▁▁ │
+│   bws │ -0.1421  0.0413  -0.2085  -0.1436  -0.0774         ▁▂██▃▁▁ │
+│     σ │  0.1419  0.0218   0.1118   0.1389   0.1824       ▁▃█▇▃▂▁▁▁ │
+└───────┴────────────────────────────────────────────────────────────┘
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
