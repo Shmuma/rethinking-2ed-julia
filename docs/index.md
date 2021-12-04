@@ -21,6 +21,7 @@ but please first try to solve them yourself, as it is much more fun (in addition
 * [Chapter 7. Ulysses' Compass](07-Chapter 7. Ulysses' Compass.html)
 * [Chapter 8. Conditional manatees](08-Chapter 8. Conditional Manatees.html)
 * [Chapter 9. Markov Chain Monte Carlo](09-Chapter 9. Markov Chain Monte Carlo.html)
+* [Chapter 10. Big Entropy and Generalized Linear Model](10-Chapter 10. Big Entropy and Generalized Linear Model.html)
 
 More chapters to come, stay tuned!
 
