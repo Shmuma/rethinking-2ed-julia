@@ -1397,17 +1397,17 @@ version = "1.2.13"
 
 [[StatisticalRethinking]]
 deps = ["AxisKeys", "CSV", "DataFrames", "Dates", "Distributions", "DocStringExtensions", "Documenter", "Formatting", "KernelDensity", "LinearAlgebra", "MCMCChains", "MonteCarloMeasurements", "NamedArrays", "NamedTupleTools", "Optim", "OrderedCollections", "Parameters", "ParetoSmooth", "ParetoSmoothedImportanceSampling", "PrettyTables", "Random", "Reexport", "Requires", "Statistics", "StatsBase", "StatsFuns", "StructuralCausalModels", "Tables", "Test", "Unicode"]
-git-tree-sha1 = "89dd34c569b411ee10c81855844893639c73fef5"
+git-tree-sha1 = "70dc00c5699cc293451739ab6bf6805c64118a46"
 uuid = "2d09df54-9d0f-5258-8220-54c2a3d4fbee"
-version = "4.4.3"
+version = "4.4.4"
 
 [[StatisticalRethinkingPlots]]
 deps = ["Distributions", "DocStringExtensions", "KernelDensity", "LaTeXStrings", "Parameters", "Plots", "Reexport", "Requires", "StatisticalRethinking", "StatsPlots"]
-git-tree-sha1 = "20135362e5daedd2f651f72ed7ea9e1363f9b81f"
+git-tree-sha1 = "4df7bd9b96a675715534ca051c1c3074db0de88c"
 repo-rev = "master"
 repo-url = "https://github.com/StatisticalRethinkingJulia/StatisticalRethinkingPlots.jl"
 uuid = "e1a513d0-d9d9-49ff-a6dd-9d2e9db473da"
-version = "1.0.0"
+version = "1.0.1"
 
 [[StatisticalTraits]]
 deps = ["ScientificTypesBase"]
