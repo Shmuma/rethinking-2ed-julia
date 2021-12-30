@@ -1,4 +1,4 @@
-# StatisticalRethinking (2nd edition) on Julia
+# StatisticalRethinking (2nd edition) with Julia
 
 This repo contains my port of StatisticalRethinking code examples to Julia with Turing.
 
