@@ -21559,6 +21559,96 @@ M235.283 1410.9 L2352.76 1410.9 L2352.76 47.2441 L235.283 47.2441  Z
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Code 11.45</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[44]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="c"># intercept only</span>
+<span class="nd">@model</span> <span class="k">function</span> <span class="n">m11_9</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">~</span> <span class="n">Normal</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">λ</span> <span class="o">=</span> <span class="n">exp</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">T</span> <span class="o">~</span> <span class="n">Poisson</span><span class="p">(</span><span class="n">λ</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="n">m11_9_ch</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">m11_9</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">total_tools</span><span class="p">),</span> <span class="n">NUTS</span><span class="p">(),</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">m11_9_df</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">m11_9_ch</span><span class="p">)</span>
+
+<span class="c"># interaction model</span>
+<span class="nd">@model</span> <span class="k">function</span> <span class="n">m11_10</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">cid</span><span class="p">,</span> <span class="n">P</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">~</span> <span class="n">MvNormal</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">~</span> <span class="n">MvNormal</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mf">0.2</span><span class="p">)</span>
+    <span class="n">λ</span> <span class="o">=</span> <span class="nd">@.</span> <span class="n">exp</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">cid</span><span class="p">]</span> <span class="o">+</span> <span class="n">b</span><span class="p">[</span><span class="n">cid</span><span class="p">]</span><span class="o">*</span><span class="n">P</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="o">∈</span> <span class="n">eachindex</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+        <span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">~</span> <span class="n">Poisson</span><span class="p">(</span><span class="n">λ</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">m11_10_ch</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">m11_10</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">total_tools</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">contact_id</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">P</span><span class="p">),</span> <span class="n">NUTS</span><span class="p">(),</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">m11_10_df</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">m11_10_ch</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Code 11.46</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[45]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">poislogpdf</span><span class="p">(</span><span class="n">exp</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">a</span><span class="p">),</span> <span class="n">T</span><span class="p">)</span>
+<span class="n">ll_m9</span> <span class="o">=</span> <span class="n">link</span><span class="p">(</span><span class="n">m11_9_df</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">total_tools</span><span class="p">)</span>
+<span class="n">ll_m9</span> <span class="o">=</span> <span class="n">hcat</span><span class="p">(</span><span class="n">ll_m9</span><span class="o">...</span><span class="p">);</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">cid</span><span class="p">,</span> <span class="n">P</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="n">poislogpdf</span><span class="p">(</span><span class="n">exp</span><span class="p">(</span><span class="n">get</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="s">&quot;a[</span><span class="si">$cid</span><span class="s">]&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">get</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="s">&quot;b[</span><span class="si">$cid</span><span class="s">]&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="n">P</span><span class="p">),</span> <span class="n">T</span><span class="p">)</span>
+<span class="n">ll_m10</span> <span class="o">=</span> <span class="n">link</span><span class="p">(</span><span class="n">m11_10_df</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">zip</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">total_tools</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">contact_id</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">P</span><span class="p">))</span>
+<span class="n">ll_m10</span> <span class="o">=</span> <span class="n">hcat</span><span class="p">(</span><span class="n">ll_m10</span><span class="o">...</span><span class="p">);</span>
+
+<span class="n">compare</span><span class="p">([</span><span class="n">ll_m9</span><span class="p">,</span> <span class="n">ll_m10</span><span class="p">],</span> <span class="ss">:psis</span><span class="p">,</span> <span class="n">mnames</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;m9&quot;</span><span class="p">,</span> <span class="s">&quot;m10&quot;</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[45]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div class="data-frame"><p>2 rows × 8 columns</p><table class="data-frame"><thead><tr><th></th><th>models</th><th>PSIS</th><th>lppd</th><th>SE</th><th>dPSIS</th><th>dSE</th><th>pPSIS</th><th>weight</th></tr><tr><th></th><th title="String">String</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th><th title="Float64">Float64</th></tr></thead><tbody><tr><th>1</th><td>m10</td><td>82.9</td><td>71.39</td><td>12.2</td><td>0.0</td><td>0.0</td><td>5.97</td><td>1.0</td></tr><tr><th>2</th><td>m9</td><td>141.0</td><td>124.69</td><td>31.61</td><td>58.1</td><td>31.83</td><td>8.94</td><td>0.0</td></tr></tbody></table></div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
