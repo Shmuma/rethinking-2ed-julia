@@ -24,6 +24,7 @@ but please first try to solve them yourself, as it is much more fun (in addition
 * [Chapter 10. Big Entropy and Generalized Linear Model](10-Chapter 10. Big Entropy and Generalized Linear Model.html)
 * [Chapter 11. God Spiked the Integers](11-Chapter 11. God Spiked the Integers.html)
 * [Chapter 12. Monsters and Mixtures](12-Chapter 12. Monsters and Mixtures.html)
+* [Chapter 13. Models with Memory](13-Chapter 13. Models with Memory.html)
 
 More chapters to come, stay tuned!
 
