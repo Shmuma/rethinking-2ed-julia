@@ -25,7 +25,7 @@ but please first try to solve them yourself, as it is much more fun (in addition
 * [Chapter 11. God Spiked the Integers](11-Chapter 11. God Spiked the Integers.html)
 * [Chapter 12. Monsters and Mixtures](12-Chapter 12. Monsters and Mixtures.html)
 * [Chapter 13. Models with Memory](13-Chapter 13. Models with Memory.html)
-* [Chapter 14. Adventures with Covariance](14-Chapter 14. Adventures with Covariance.html)
+* [Chapter 14. Adventures in Covariance](14-Chapter 14. Adventures in Covariance.html)
 
 More chapters to come, stay tuned!
 
