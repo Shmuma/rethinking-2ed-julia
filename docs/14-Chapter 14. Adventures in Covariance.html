@@ -13095,6 +13095,7 @@ div#notebook {
 <span class="k">using</span> <span class="n">StatsPlots</span>
 <span class="k">using</span> <span class="n">StatsBase</span>
 <span class="k">using</span> <span class="n">Logging</span>
+<span class="k">using</span> <span class="n">LinearAlgebra</span>
 
 <span class="n">default</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="nb">false</span><span class="p">);</span>
 <span class="n">Logging</span><span class="o">.</span><span class="n">disable_logging</span><span class="p">(</span><span class="n">Logging</span><span class="o">.</span><span class="n">Warn</span><span class="p">);</span>
@@ -13111,6 +13112,261 @@ div#notebook {
 <h1 id="14.1-Varying-slopes-by-construction">14.1 Varying slopes by construction<a class="anchor-link" href="#14.1-Varying-slopes-by-construction">&#182;</a></h1>
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Code 14.1</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mf">3.5</span>    <span class="c"># average morning wait time</span>
+<span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>     <span class="c"># average difference afternoon wait time</span>
+<span class="n">σ_a</span> <span class="o">=</span> <span class="mi">1</span>    <span class="c"># std dev in intercepts</span>
+<span class="n">σ_b</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c"># std dev in slopes</span>
+<span class="n">ρ</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.7</span><span class="p">;</span>  <span class="c"># correlation between intercepts and slopes</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Code 14.2</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">μ</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">];</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Code 14.3</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">cov_ab</span> <span class="o">=</span> <span class="n">σ_a</span> <span class="o">*</span> <span class="n">σ_b</span> <span class="o">*</span> <span class="n">ρ</span>
+<span class="n">Σ</span> <span class="o">=</span> <span class="p">[[</span><span class="n">σ_a</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span> <span class="n">cov_ab</span><span class="p">]</span> <span class="p">[</span><span class="n">cov_ab</span><span class="p">,</span> <span class="n">σ_b</span><span class="o">^</span><span class="mi">2</span><span class="p">]]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[4]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>2×2 Matrix{Float64}:
+  1.0   -0.35
+ -0.35   0.25</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Code 14.4</p>
+<p>Julia has similar "column-first" matix order</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="o">:</span><span class="mi">4</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[5]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>2×2 reshape(::UnitRange{Int64}, 2, 2) with eltype Int64:
+ 1  3
+ 2  4</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Code 14.5</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">sigmas</span> <span class="o">=</span> <span class="p">[</span><span class="n">σ_a</span><span class="p">,</span> <span class="n">σ_b</span><span class="p">]</span>
+<span class="n">Ρ</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="n">ρ</span><span class="p">]</span> <span class="p">[</span><span class="n">ρ</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
+<span class="n">Σ</span> <span class="o">=</span> <span class="n">Diagonal</span><span class="p">(</span><span class="n">sigmas</span><span class="p">)</span> <span class="o">*</span> <span class="n">Ρ</span> <span class="o">*</span> <span class="n">Diagonal</span><span class="p">(</span><span class="n">sigmas</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Code 14.6</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">N_cafes</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Code 14.7</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">Random</span><span class="o">.</span><span class="n">seed!</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">vary_effect</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="n">MvNormal</span><span class="p">(</span><span class="n">μ</span><span class="p">,</span> <span class="n">Σ</span><span class="p">),</span> <span class="n">N_cafes</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Code 14.8</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">a_cafe</span> <span class="o">=</span> <span class="n">vary_effect</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="o">:</span><span class="p">]</span>
+<span class="n">b_cafe</span> <span class="o">=</span> <span class="n">vary_effect</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="o">:</span><span class="p">];</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Code 14.9</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">scatter</span><span class="p">(</span><span class="n">a_cafe</span><span class="p">,</span> <span class="n">b_cafe</span><span class="p">,</span> <span class="n">xlab</span><span class="o">=</span><span class="s">&quot;intercepts (a_cafe)&quot;</span><span class="p">,</span> <span class="n">ylab</span><span class="o">=</span><span class="s">&quot;slopes (b_cafe)&quot;</span><span class="p">)</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">acos</span><span class="p">(</span><span class="n">Σ</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">chi</span> <span class="o">=</span> <span class="n">Chisq</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">l</span> <span class="o">∈</span> <span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.99</span><span class="p">)</span>
+    <span class="n">scale</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">quantile</span><span class="p">(</span><span class="n">chi</span><span class="p">,</span> <span class="n">l</span><span class="p">))</span>
+    <span class="n">xₜ</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">=</span> <span class="n">scale</span><span class="o">*</span><span class="n">Σ</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="n">d</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">μ</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">yₜ</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">=</span> <span class="n">scale</span><span class="o">*</span><span class="n">Σ</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">d</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">μ</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="n">plot!</span><span class="p">(</span><span class="n">xₜ</span><span class="p">,</span> <span class="n">yₜ</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="nb">π</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="ss">:black</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="k">end</span>
+<span class="n">p</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
