@@ -16114,6 +16114,323 @@ M249.542 1552.76 L2352.76 1552.76 L2352.76 47.2441 L249.542 47.2441  Z
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Code 14.23</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">Random</span><span class="o">.</span><span class="n">seed!</span><span class="p">(</span><span class="mi">73</span><span class="p">)</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">U_sim</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(),</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">Q_sim</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="o">:</span><span class="mi">4</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">E_sim</span> <span class="o">=</span> <span class="p">[</span><span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="n">μ</span><span class="p">))</span> <span class="k">for</span> <span class="n">μ</span> <span class="o">∈</span> <span class="n">U_sim</span> <span class="o">.+</span> <span class="n">Q_sim</span><span class="p">]</span>
+<span class="n">W_sim</span> <span class="o">=</span> <span class="p">[</span><span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="n">μ</span><span class="p">))</span> <span class="k">for</span> <span class="n">μ</span> <span class="o">∈</span> <span class="n">U_sim</span> <span class="o">.+</span> <span class="mi">0</span><span class="o">*</span><span class="n">Q_sim</span><span class="p">]</span>
+
+<span class="n">dat_sim</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">W</span><span class="o">=</span><span class="n">standardize</span><span class="p">(</span><span class="n">ZScoreTransform</span><span class="p">,</span> <span class="n">W_sim</span><span class="p">),</span>
+    <span class="n">E</span><span class="o">=</span><span class="n">standardize</span><span class="p">(</span><span class="n">ZScoreTransform</span><span class="p">,</span> <span class="n">E_sim</span><span class="p">),</span>
+    <span class="n">Q</span><span class="o">=</span><span class="n">standardize</span><span class="p">(</span><span class="n">ZScoreTransform</span><span class="p">,</span> <span class="n">float</span><span class="o">.</span><span class="p">(</span><span class="n">Q_sim</span><span class="p">)),</span>
+<span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Code 14.24</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="nd">@model</span> <span class="k">function</span> <span class="n">m14_4</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">E</span><span class="p">)</span>
+    <span class="n">σ</span> <span class="o">~</span> <span class="n">Exponential</span><span class="p">()</span>
+    <span class="n">aW</span> <span class="o">~</span> <span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+    <span class="n">bEW</span> <span class="o">~</span> <span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">μ</span> <span class="o">=</span> <span class="nd">@.</span> <span class="n">aW</span> <span class="o">+</span> <span class="n">bEW</span> <span class="o">*</span> <span class="n">E</span>
+    <span class="n">W</span> <span class="o">~</span> <span class="n">MvNormal</span><span class="p">(</span><span class="n">μ</span><span class="p">,</span> <span class="n">σ</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="n">m14_4_ch</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">m14_4</span><span class="p">(</span><span class="n">dat_sim</span><span class="o">.</span><span class="n">W</span><span class="p">,</span> <span class="n">dat_sim</span><span class="o">.</span><span class="n">E</span><span class="p">),</span>
+    <span class="n">NUTS</span><span class="p">(),</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">m14_4_df</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">m14_4_ch</span><span class="p">)</span>
+<span class="n">precis</span><span class="p">(</span><span class="n">m14_4_df</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>┌───────┬───────────────────────────────────────────────────────┐
+│<span class="ansi-bold"> param </span>│<span class="ansi-bold">    mean </span><span class="ansi-bold">    std </span><span class="ansi-bold">    5.5% </span><span class="ansi-bold">     50% </span><span class="ansi-bold">  94.5% </span><span class="ansi-bold">  histogram </span>│
+├───────┼───────────────────────────────────────────────────────┤
+│    aW │ -0.0016  0.0411  -0.0667  -0.0015  0.0635      ▁▃██▂▁ │
+│   bEW │  0.3601  0.0421   0.2954   0.3605   0.427      ▁▂▆█▄▁ │
+│     σ │  0.9345  0.0288    0.891   0.9354  0.9795  ▁▁▄▇██▅▂▁▁ │
+└───────┴───────────────────────────────────────────────────────┘
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Code 14.25</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="nd">@model</span> <span class="k">function</span> <span class="n">m14_5</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span>
+    <span class="n">σ</span> <span class="o">~</span> <span class="n">Exponential</span><span class="p">()</span>
+    <span class="n">aW</span> <span class="o">~</span> <span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+    <span class="n">bEW</span> <span class="o">~</span> <span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">bQW</span> <span class="o">~</span> <span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">μ</span> <span class="o">=</span> <span class="nd">@.</span> <span class="n">aW</span> <span class="o">+</span> <span class="n">bEW</span> <span class="o">*</span> <span class="n">E</span> <span class="o">+</span> <span class="n">bQW</span> <span class="o">*</span> <span class="n">Q</span>
+    <span class="n">W</span> <span class="o">~</span> <span class="n">MvNormal</span><span class="p">(</span><span class="n">μ</span><span class="p">,</span> <span class="n">σ</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="n">m14_5_ch</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">m14_5</span><span class="p">(</span><span class="n">dat_sim</span><span class="o">.</span><span class="n">W</span><span class="p">,</span> <span class="n">dat_sim</span><span class="o">.</span><span class="n">E</span><span class="p">,</span> <span class="n">dat_sim</span><span class="o">.</span><span class="n">Q</span><span class="p">),</span>
+    <span class="n">NUTS</span><span class="p">(),</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">m14_5_df</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">m14_5_ch</span><span class="p">)</span>
+<span class="n">precis</span><span class="p">(</span><span class="n">m14_5_df</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>┌───────┬───────────────────────────────────────────────────────┐
+│<span class="ansi-bold"> param </span>│<span class="ansi-bold">    mean </span><span class="ansi-bold">    std </span><span class="ansi-bold">    5.5% </span><span class="ansi-bold">     50% </span><span class="ansi-bold">  94.5% </span><span class="ansi-bold">  histogram </span>│
+├───────┼───────────────────────────────────────────────────────┤
+│    aW │ -0.0004  0.0401  -0.0618  -0.0003  0.0641     ▁▂██▃▁▁ │
+│   bEW │  0.6029  0.0478   0.5269   0.6017  0.6825     ▁▃██▃▁▁ │
+│   bQW │ -0.3803  0.0494  -0.4575  -0.3819  -0.302     ▁▂▆█▅▁▁ │
+│     σ │  0.8871  0.0273   0.8449    0.886  0.9318  ▁▁▄▇█▅▃▁▁▁ │
+└───────┴───────────────────────────────────────────────────────┘
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Code 14.26</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="nd">@model</span> <span class="k">function</span> <span class="n">m14_6</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">WE</span><span class="p">)</span>
+    <span class="n">σ</span> <span class="o">~</span> <span class="n">filldist</span><span class="p">(</span><span class="n">Exponential</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">ρ</span> <span class="o">~</span> <span class="n">LKJ</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">aW</span> <span class="o">~</span> <span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+    <span class="n">aE</span> <span class="o">~</span> <span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+    <span class="n">bEW</span> <span class="o">~</span> <span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">bQE</span> <span class="o">~</span> <span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">μW</span> <span class="o">=</span> <span class="nd">@.</span> <span class="n">aW</span> <span class="o">+</span> <span class="n">bEW</span><span class="o">*</span><span class="n">E</span>
+    <span class="n">μE</span> <span class="o">=</span> <span class="nd">@.</span> <span class="n">aW</span> <span class="o">+</span> <span class="n">bQE</span><span class="o">*</span><span class="n">Q</span>
+    <span class="n">Σ</span> <span class="o">=</span> <span class="p">(</span><span class="n">σ</span> <span class="o">.*</span> <span class="n">σ</span><span class="o">&#39;</span><span class="p">)</span> <span class="o">.*</span> <span class="n">ρ</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="o">∈</span> <span class="n">eachindex</span><span class="p">(</span><span class="n">WE</span><span class="p">)</span>
+        <span class="n">WE</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">~</span> <span class="n">MvNormal</span><span class="p">([</span><span class="n">μW</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">μE</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="n">Σ</span><span class="p">)</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">Random</span><span class="o">.</span><span class="n">seed!</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c"># need to combine W and E here (Turing vars limitation)</span>
+<span class="n">WE</span> <span class="o">=</span> <span class="p">[[</span><span class="n">w</span><span class="p">,</span><span class="n">e</span><span class="p">]</span> <span class="k">for</span> <span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="n">e</span><span class="p">)</span> <span class="o">∈</span> <span class="n">zip</span><span class="p">(</span><span class="n">dat_sim</span><span class="o">.</span><span class="n">W</span><span class="p">,</span> <span class="n">dat_sim</span><span class="o">.</span><span class="n">E</span><span class="p">)]</span>
+
+<span class="n">m14_6_ch</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">m14_6</span><span class="p">(</span><span class="n">dat_sim</span><span class="o">.</span><span class="n">W</span><span class="p">,</span> <span class="n">dat_sim</span><span class="o">.</span><span class="n">E</span><span class="p">,</span> <span class="n">dat_sim</span><span class="o">.</span><span class="n">Q</span><span class="p">,</span> <span class="n">WE</span><span class="p">),</span> <span class="n">NUTS</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mf">0.65</span><span class="p">,</span> <span class="n">init_ϵ</span><span class="o">=</span><span class="mf">0.003</span><span class="p">),</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">m14_6_df</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">m14_6_ch</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="c"># Drop cols with zero variance</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">m14_6_df</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="n">Not</span><span class="p">(</span><span class="s">&quot;ρ[1,1]&quot;</span><span class="p">)][</span><span class="o">:</span><span class="p">,</span><span class="n">Not</span><span class="p">(</span><span class="s">&quot;ρ[2,2]&quot;</span><span class="p">)]</span>
+<span class="n">precis</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>┌────────┬─────────────────────────────────────────────────────────┐
+│<span class="ansi-bold">  param </span>│<span class="ansi-bold">   mean </span><span class="ansi-bold">    std </span><span class="ansi-bold">    5.5% </span><span class="ansi-bold">     50% </span><span class="ansi-bold">  94.5% </span><span class="ansi-bold">     histogram </span>│
+├────────┼─────────────────────────────────────────────────────────┤
+│     aE │ 0.0016  0.1902  -0.2972  -0.0015  0.3012       ▁▁▃██▃▁▁ │
+│     aW │ 0.0005  0.0323  -0.0538   0.0012  0.0482   ▁▁▁▃▆██▇▃▁▁▁ │
+│    bEW │ 0.0007  0.0702  -0.1128   0.0019  0.1092    ▁▁▂▅██▆▂▁▁▁ │
+│    bQE │ 0.6327  0.0346   0.5776   0.6325  0.6907  ▁▁▁▂▄███▅▃▁▁▁ │
+│ ρ[1,2] │ 0.4653  0.0556   0.3773   0.4661  0.5503      ▁▁▁▃██▇▂▁ │
+│ ρ[2,1] │ 0.4653  0.0556   0.3773   0.4661  0.5503      ▁▁▁▃██▇▂▁ │
+│   σ[1] │ 1.0021  0.0398   0.9402    1.001  1.0712  ▁▁▂▄▇██▇▄▂▁▁▁ │
+│   σ[2] │ 0.7739  0.0248   0.7334   0.7738   0.813       ▁▃▅█▇▄▁▁ │
+└────────┴─────────────────────────────────────────────────────────┘
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Code 14.28</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">Random</span><span class="o">.</span><span class="n">seed!</span><span class="p">(</span><span class="mi">73</span><span class="p">)</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">U_sim</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(),</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">Q_sim</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="o">:</span><span class="mi">4</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">E_sim</span> <span class="o">=</span> <span class="p">[</span><span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="n">μ</span><span class="p">))</span> <span class="k">for</span> <span class="n">μ</span> <span class="o">∈</span> <span class="n">U_sim</span> <span class="o">.+</span> <span class="n">Q_sim</span><span class="p">]</span>
+<span class="n">W_sim</span> <span class="o">=</span> <span class="p">[</span><span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="n">μ</span><span class="p">))</span> <span class="k">for</span> <span class="n">μ</span> <span class="o">∈</span> <span class="o">-</span><span class="n">U_sim</span> <span class="o">.+</span> <span class="mf">0.2</span><span class="o">*</span><span class="n">Q_sim</span><span class="p">]</span>
+
+<span class="n">dat_sim</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">W</span><span class="o">=</span><span class="n">standardize</span><span class="p">(</span><span class="n">ZScoreTransform</span><span class="p">,</span> <span class="n">W_sim</span><span class="p">),</span>
+    <span class="n">E</span><span class="o">=</span><span class="n">standardize</span><span class="p">(</span><span class="n">ZScoreTransform</span><span class="p">,</span> <span class="n">E_sim</span><span class="p">),</span>
+    <span class="n">Q</span><span class="o">=</span><span class="n">standardize</span><span class="p">(</span><span class="n">ZScoreTransform</span><span class="p">,</span> <span class="n">float</span><span class="o">.</span><span class="p">(</span><span class="n">Q_sim</span><span class="p">)),</span>
+<span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Code 14.29</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="k">using</span> <span class="n">Dagitty</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">DAG</span><span class="p">(</span><span class="ss">:Q</span> <span class="o">=&gt;</span> <span class="ss">:E</span><span class="p">,</span> <span class="ss">:U</span> <span class="o">=&gt;</span> <span class="ss">:E</span><span class="p">,</span> <span class="ss">:E</span> <span class="o">=&gt;</span> <span class="ss">:W</span><span class="p">,</span> <span class="ss">:E</span> <span class="o">=&gt;</span> <span class="ss">:W</span><span class="p">)</span>
+<span class="c"># not implemented in dagitty.jl yet</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[38]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>DAG: {4, 3} directed simple Int64 graph with labels [:E, :Q, :U, :W])
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="14.4-Social-relations-as-correlated-varying-effects">14.4 Social relations as correlated varying effects<a class="anchor-link" href="#14.4-Social-relations-as-correlated-varying-effects">&#182;</a></h1>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
