@@ -14254,6 +14254,252 @@ M210.746 1423.18 L2352.76 1423.18 L2352.76 47.2441 L210.746 47.2441  Z
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Code 15.8</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(),</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">H</span> <span class="o">=</span> <span class="n">rand</span><span class="o">.</span><span class="p">([</span><span class="n">BinomialLogit</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="k">in</span> <span class="n">S</span><span class="p">]);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Code 15.9</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">D</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="n">Bernoulli</span><span class="p">(),</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">Hm</span> <span class="o">=</span> <span class="kt">Vector</span><span class="p">{</span><span class="kt">Union</span><span class="p">{</span><span class="kt">Missing</span><span class="p">,</span><span class="kt">Int</span><span class="p">}}(</span><span class="n">H</span><span class="p">)</span>
+<span class="n">Hm</span><span class="p">[</span><span class="n">D</span> <span class="o">.==</span> <span class="mi">1</span><span class="p">]</span> <span class="o">.=</span> <span class="nb">missing</span><span class="p">;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Code 15.10</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">D</span> <span class="o">=</span> <span class="n">S</span> <span class="o">.&gt;</span> <span class="mi">0</span>
+<span class="n">Hm</span> <span class="o">=</span> <span class="kt">Vector</span><span class="p">{</span><span class="kt">Union</span><span class="p">{</span><span class="kt">Missing</span><span class="p">,</span><span class="kt">Int</span><span class="p">}}(</span><span class="n">H</span><span class="p">)</span>
+<span class="n">Hm</span><span class="p">[</span><span class="n">D</span> <span class="o">.==</span> <span class="mi">1</span><span class="p">]</span> <span class="o">.=</span> <span class="nb">missing</span><span class="p">;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Code 15.11</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">Random</span><span class="o">.</span><span class="n">seed!</span><span class="p">(</span><span class="mi">501</span><span class="p">)</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(),</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(),</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">H</span> <span class="o">=</span> <span class="n">rand</span><span class="o">.</span><span class="p">([</span><span class="n">BinomialLogit</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="k">in</span> <span class="mi">2</span> <span class="o">.+</span> <span class="n">S</span> <span class="o">.-</span> <span class="mi">2</span><span class="n">X</span><span class="p">])</span>
+<span class="n">D</span> <span class="o">=</span> <span class="n">X</span> <span class="o">.&gt;</span> <span class="mi">1</span>
+<span class="n">Hm</span> <span class="o">=</span> <span class="kt">Vector</span><span class="p">{</span><span class="kt">Union</span><span class="p">{</span><span class="kt">Missing</span><span class="p">,</span><span class="kt">Int</span><span class="p">}}(</span><span class="n">H</span><span class="p">)</span>
+<span class="n">Hm</span><span class="p">[</span><span class="n">D</span> <span class="o">.==</span> <span class="mi">1</span><span class="p">]</span> <span class="o">.=</span> <span class="nb">missing</span><span class="p">;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Code 15.12</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="nd">@model</span> <span class="k">function</span> <span class="n">m15_3</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">~</span> <span class="n">Normal</span><span class="p">()</span>
+    <span class="n">bS</span> <span class="o">~</span> <span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="nd">@.</span> <span class="n">logistic</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">bS</span><span class="o">*</span><span class="n">S</span><span class="p">)</span>
+    <span class="nd">@.</span> <span class="n">H</span> <span class="o">~</span> <span class="n">Binomial</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="n">Random</span><span class="o">.</span><span class="n">seed!</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">m15_3_ch</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">m15_3</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">S</span><span class="p">),</span> <span class="n">NUTS</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.65</span><span class="p">,</span> <span class="n">init_ϵ</span><span class="o">=</span><span class="mf">0.25</span><span class="p">),</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">m15_3_df</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">m15_3_ch</span><span class="p">)</span>
+<span class="n">precis</span><span class="p">(</span><span class="n">m15_3_df</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>┌───────┬────────────────────────────────────────────────────┐
+│<span class="ansi-bold"> param </span>│<span class="ansi-bold">   mean </span><span class="ansi-bold">    std </span><span class="ansi-bold">   5.5% </span><span class="ansi-bold">    50% </span><span class="ansi-bold">  94.5% </span><span class="ansi-bold">  histogram </span>│
+├───────┼────────────────────────────────────────────────────┤
+│     a │ 1.2133   0.024  1.1743  1.2129  1.2533  ▁▁▁▂▅█▇▃▁▁ │
+│    bS │ 0.6832  0.0258  0.6431  0.6831   0.726  ▁▂▄██▆▂▁▁▁ │
+└───────┴────────────────────────────────────────────────────┘
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Code 15.13</p>
+<p>Model is the same, no need to redefine it</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">Random</span><span class="o">.</span><span class="n">seed!</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">m15_4_ch</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">m15_3</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="n">D</span> <span class="o">.==</span> <span class="mi">0</span><span class="p">],</span> <span class="n">S</span><span class="p">[</span><span class="n">D</span> <span class="o">.==</span> <span class="mi">0</span><span class="p">]),</span> <span class="n">NUTS</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.65</span><span class="p">,</span> <span class="n">init_ϵ</span><span class="o">=</span><span class="mf">0.25</span><span class="p">),</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">m15_4_df</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">m15_4_ch</span><span class="p">)</span>
+<span class="n">precis</span><span class="p">(</span><span class="n">m15_4_df</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>┌───────┬───────────────────────────────────────────────────────┐
+│<span class="ansi-bold"> param </span>│<span class="ansi-bold">   mean </span><span class="ansi-bold">    std </span><span class="ansi-bold">   5.5% </span><span class="ansi-bold">    50% </span><span class="ansi-bold">  94.5% </span><span class="ansi-bold">     histogram </span>│
+├───────┼───────────────────────────────────────────────────────┤
+│     a │ 1.9059  0.0372  1.8478  1.9035  1.9669  ▁▁▁▁▃▅█▇▆▄▃▁▁ │
+│    bS │ 0.8202  0.0353  0.7648  0.8194  0.8777   ▁▁▂▃▆██▅▄▂▁▁ │
+└───────┴───────────────────────────────────────────────────────┘
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Code 15.14</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">D</span> <span class="o">=</span> <span class="n">abs</span><span class="o">.</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">.&lt;</span> <span class="mi">1</span><span class="p">;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Code 15.15</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(),</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">H</span> <span class="o">=</span> <span class="n">rand</span><span class="o">.</span><span class="p">([</span><span class="n">BinomialLogit</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="k">in</span> <span class="n">S</span><span class="p">])</span>
+<span class="n">D</span> <span class="o">=</span> <span class="n">H</span> <span class="o">.&lt;</span> <span class="mi">5</span>
+<span class="n">Hm</span> <span class="o">=</span> <span class="kt">Vector</span><span class="p">{</span><span class="kt">Union</span><span class="p">{</span><span class="kt">Missing</span><span class="p">,</span><span class="kt">Int</span><span class="p">}}(</span><span class="n">H</span><span class="p">)</span>
+<span class="n">Hm</span><span class="p">[</span><span class="n">D</span> <span class="o">.==</span> <span class="mi">1</span><span class="p">]</span> <span class="o">.=</span> <span class="nb">missing</span><span class="p">;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
