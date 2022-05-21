@@ -19130,6 +19130,111 @@ M175.445 1423.18 L2352.76 1423.18 L2352.76 47.2441 L175.445 47.2441  Z
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Code 15.29</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">Random</span><span class="o">.</span><span class="n">seed!</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+
+<span class="n">N_houses</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">α</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">β</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">r</span> <span class="o">=</span> <span class="mf">0.2</span>
+
+<span class="n">cat</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="n">Bernoulli</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">N_houses</span><span class="p">)</span>
+<span class="n">notes</span> <span class="o">=</span> <span class="n">rand</span><span class="o">.</span><span class="p">([</span><span class="n">Poisson</span><span class="p">(</span><span class="n">α</span> <span class="o">+</span> <span class="n">β</span> <span class="o">*</span> <span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="o">∈</span> <span class="n">cat</span><span class="p">])</span>
+<span class="n">R_C</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="n">Bernoulli</span><span class="p">(</span><span class="n">r</span><span class="p">),</span> <span class="n">N_houses</span><span class="p">)</span>
+
+<span class="n">cat_obs</span> <span class="o">=</span> <span class="kt">Vector</span><span class="p">{</span><span class="kt">Int</span><span class="p">}(</span><span class="n">cat</span><span class="p">)</span>
+<span class="n">cat_obs</span><span class="p">[</span><span class="n">R_C</span><span class="p">]</span> <span class="o">.=</span> <span class="o">-</span><span class="mi">9</span>
+
+<span class="n">dat</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">notes</span> <span class="o">=</span> <span class="n">notes</span><span class="p">,</span>
+    <span class="n">cat</span> <span class="o">=</span> <span class="n">cat_obs</span><span class="p">,</span>
+    <span class="n">RC</span> <span class="o">=</span> <span class="n">R_C</span><span class="p">,</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">N_houses</span><span class="p">,</span>
+<span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Code 15.30</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="nd">@model</span> <span class="k">function</span> <span class="n">m15_8</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">cat</span><span class="p">,</span> <span class="n">RC</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">~</span> <span class="n">Normal</span><span class="p">()</span>
+    <span class="n">b</span> <span class="o">~</span> <span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">k</span> <span class="o">~</span> <span class="n">Beta</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">λ</span> <span class="o">=</span> <span class="nd">@.</span> <span class="n">logistic</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">*</span> <span class="n">cat</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="o">∈</span> <span class="n">eachindex</span><span class="p">(</span><span class="n">cat</span><span class="p">)</span>
+        <span class="k">if</span> <span class="o">!</span><span class="n">RC</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">cat</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">~</span> <span class="n">Bernoulli</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+            <span class="n">notes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">~</span> <span class="n">Poisson</span><span class="p">(</span><span class="n">λ</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">else</span>
+            <span class="n">Turing</span><span class="o">.</span><span class="nd">@addlogprob!</span> <span class="n">log</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">+</span> <span class="n">poislogpdf</span><span class="p">(</span><span class="n">exp</span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">),</span> <span class="n">notes</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">Turing</span><span class="o">.</span><span class="nd">@addlogprob!</span> <span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">k</span><span class="p">)</span> <span class="o">+</span> <span class="n">poislogpdf</span><span class="p">(</span><span class="n">exp</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">notes</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">m15_8_ch</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">m15_8</span><span class="p">(</span><span class="n">dat</span><span class="o">...</span><span class="p">),</span> <span class="n">NUTS</span><span class="p">(),</span> <span class="mi">10000</span><span class="p">)</span>
+<span class="n">m15_8_df</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">m15_8_ch</span><span class="p">)</span>
+<span class="n">precis</span><span class="p">(</span><span class="n">m15_8_df</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>┌───────┬──────────────────────────────────────────────────────────┐
+│<span class="ansi-bold"> param </span>│<span class="ansi-bold">    mean </span><span class="ansi-bold">    std </span><span class="ansi-bold">    5.5% </span><span class="ansi-bold">     50% </span><span class="ansi-bold">   94.5% </span><span class="ansi-bold">    histogram </span>│
+├───────┼──────────────────────────────────────────────────────────┤
+│     a │    1.55  0.0861    1.413   1.5511   1.6872       ▁▁▅█▅▁▁ │
+│     b │ -0.2694  0.1358  -0.4872  -0.2687  -0.0541  ▁▁▁▂▄▇█▆▃▁▁▁ │
+│     k │  0.4639  0.0448   0.3926   0.4637   0.5344       ▁▂▇█▄▁▁ │
+└───────┴──────────────────────────────────────────────────────────┘
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
