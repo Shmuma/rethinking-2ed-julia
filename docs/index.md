@@ -27,7 +27,6 @@ but please first try to solve them yourself, as it is much more fun (in addition
 * [Chapter 13. Models with Memory](13-Chapter 13. Models with Memory.html)
 * [Chapter 14. Adventures in Covariance](14-Chapter 14. Adventures in Covariance.html)
 * [Chapter 15. Missing Data and Other Opportunities](15-Chapter 15. Missing Data and Other Opportunities.html)
-
-More chapters to come, stay tuned!
+* [Chapter 16. Generalized Linear Madness](16-Chapter 16. Generalized Linear Madness.html)
 
 Besides Julia, second edition examples were also [ported to NumPyro](https://fehiepsi.github.io/rethinking-numpyro/).
