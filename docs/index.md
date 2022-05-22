@@ -28,5 +28,6 @@ but please first try to solve them yourself, as it is much more fun (in addition
 * [Chapter 14. Adventures in Covariance](14-Chapter 14. Adventures in Covariance.html)
 * [Chapter 15. Missing Data and Other Opportunities](15-Chapter 15. Missing Data and Other Opportunities.html)
 * [Chapter 16. Generalized Linear Madness](16-Chapter 16. Generalized Linear Madness.html)
+* [Chapter 17. Horoscopes (no code)](17-Chapter 17. Horoscopes.html)
 
 Besides Julia, second edition examples were also [ported to NumPyro](https://fehiepsi.github.io/rethinking-numpyro/).
